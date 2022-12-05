@@ -3,16 +3,13 @@ import styled from "styled-components";
 const Wrap = styled.div`
   display: flex;
 `;
-const RedBox = styled.div`
-  background-color: tomato;
+const Box = styled.div`
+  background-color: ${(props) => props.bgColor};
   width: 100px;
   height: 100px;
 `;
-
-const BlueBox = styled.div`
-  background-color: powderblue;
-  width: 100px;
-  height: 100px;
+const Circle = styled(Box)`
+  border-radius: 50px;
 `;
 
 const Text = styled.span``;
@@ -21,20 +18,20 @@ function App() {
   return (
     <>
       <Wrap>
-        <RedBox>
+        <Box bgColor="tomato">
           <Text>asdas</Text>
-        </RedBox>
-        <BlueBox>
+        </Box>
+        <Box bgColor="powderblue">
           <Text>@@@</Text>
-        </BlueBox>
+        </Box>
       </Wrap>
       <Wrap>
-        <BlueBox>
+        <Box bgColor="powderblue">
           <Text>@@@</Text>
-        </BlueBox>
-        <RedBox>
+        </Box>
+        <Circle bgColor="orange">
           <Text>asdasdsa</Text>
-        </RedBox>
+        </Circle>
       </Wrap>
     </>
   );
