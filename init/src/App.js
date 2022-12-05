@@ -40,6 +40,12 @@ const RotateBox = styled(Box)`
   animation: ${animation} 1s linear infinite;
   margin-top: 20px;
   margin-left: 20px;
+  span {
+    font-size: 50px;
+    &:hover {
+      font-size: 100px;
+    }
+  }
 `;
 
 function App() {
