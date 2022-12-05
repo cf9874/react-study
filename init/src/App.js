@@ -14,25 +14,27 @@ const Circle = styled(Box)`
 
 const Text = styled.span``;
 
+const Btn = styled.button`
+  color: white;
+  background-color: tomato;
+  border: 0;
+  border-radius: 15px;
+`;
+const Input = styled.input.attrs({ required: true, placeholder: "placeholder", maxLength: 10 })`
+  background-color: gold;
+`;
 function App() {
   return (
     <>
       <Wrap>
-        <Box bgColor="tomato">
-          <Text>asdas</Text>
-        </Box>
-        <Box bgColor="powderblue">
-          <Text>@@@</Text>
-        </Box>
+        <Btn>Log in</Btn>
+        <Btn as="a" href="/">
+          Log in
+        </Btn>
       </Wrap>
-      <Wrap>
-        <Box bgColor="powderblue">
-          <Text>@@@</Text>
-        </Box>
-        <Circle bgColor="orange">
-          <Text>asdasdsa</Text>
-        </Circle>
-      </Wrap>
+      <Input />
+      <Input />
+      <Input />
     </>
   );
 }
