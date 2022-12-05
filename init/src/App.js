@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Wrap = styled.div`
   display: flex;
@@ -8,11 +8,6 @@ const Box = styled.div`
   width: 100px;
   height: 100px;
 `;
-const Circle = styled(Box)`
-  border-radius: 50px;
-`;
-
-const Text = styled.span``;
 
 const Btn = styled.button`
   color: white;
@@ -23,6 +18,30 @@ const Btn = styled.button`
 const Input = styled.input.attrs({ required: true, placeholder: "placeholder", maxLength: 10 })`
   background-color: gold;
 `;
+
+const animation = keyframes`
+0%{
+  transform:rotate(0deg);
+  border-radius: 0px;
+}
+50%{
+  /* transform:rotate(360deg); */
+  border-radius: 100px
+}
+100%{
+  transform:rotate(360deg);
+  border-radius: 0px;
+}
+`;
+
+const RotateBox = styled(Box)`
+  color: white;
+  background-color: blue;
+  animation: ${animation} 1s linear infinite;
+  margin-top: 20px;
+  margin-left: 20px;
+`;
+
 function App() {
   return (
     <>
@@ -35,6 +54,7 @@ function App() {
       <Input />
       <Input />
       <Input />
+      <RotateBox>asd</RotateBox>
     </>
   );
 }
