@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import Circle from "./Circle";
 
 function App() {
-  return <div></div>;
+  return <Circle bgColor="tomato" />;
 }
 
 export default App;
