@@ -7,9 +7,9 @@ interface CoinParams {
 function Coin() {
   //   const { coinId } = useParams<{ coinId: string }>();
   const { coinId } = useParams<CoinParams>();
-  console.log(coinId);
+  console.log(1010, coinId);
 
-  return <div>Coin : {coinId}</div>;
+  return <div>Coin : {coinId}가나다</div>;
 }
 
 export default Coin;
