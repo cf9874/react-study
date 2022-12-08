@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { getCoinData } from "../api";
 
 interface CoinData {
   id: string;
@@ -65,28 +67,20 @@ const Loader = styled.div`
 `;
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinData[]>([]);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const { isLoading, data } = useQuery<CoinData[]>(["getAllCoins"], getCoinData);
+  // data loading이 다 되면 data 에 값을 넣을 것이다.
+  console.log(7272, data);
 
-  useEffect(() => {
-    (async () => {
-      const response = await axios("https://api.coinpaprika.com/v1/coins");
-
-      const coinList = response.data.slice(0, 100);
-      //   console.log(coinList);
-      setCoins(coinList);
-      setLoading(true);
-    })();
-  }, []);
-  //   https://cryptoicon-api.vercel.app/api/icon/btc
   return (
     <Container>
       <Header>
         <Title>Coins</Title>
       </Header>
       <CoinList>
-        {loading ? (
-          coins.map((coin) => (
+        {isLoading ? (
+          <Loader>loading...</Loader>
+        ) : (
+          data?.slice(0, 100).map((coin) => (
             <Link to={`/${coin.id}`} state={{ name: coin.name }}>
               <Coin key={coin.id}>
                 <img
@@ -99,8 +93,6 @@ function Coins() {
               </Coin>
             </Link>
           ))
-        ) : (
-          <Loader>loading...</Loader>
         )}
       </CoinList>
     </Container>
