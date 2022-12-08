@@ -1,7 +1,10 @@
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Price from "../Component/Price";
+import Chart from "../Component/Chart";
+import { Link } from "react-router-dom";
 
 interface CoinParams {
   coinId: string;
@@ -90,8 +93,49 @@ const Loader = styled.div`
   font-size: 20px;
 `;
 
-function Coin(props: {}) {
-  const [loading, setLoading] = useState<Boolean>(false);
+const Overview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+`;
+const OverviewItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span:first-child {
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+`;
+const Description = styled.p`
+  margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Tab = styled.div`
+  text-align: center;
+  line-height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 15px 0;
+  &:hover {
+    background-color: rgba(35, 100, 100, 0.5);
+  }
+  a {
+    padding: 30px 80px;
+  }
+`;
+
+function Coin() {
+  const [loading, setLoading] = useState<Boolean>(true);
   const [info, setInfo] = useState<IInfoData>();
   const [price, setPrice] = useState<IPriceData>();
   //   const { coinId } = useParams<{ coinId: string }>();
@@ -103,30 +147,60 @@ function Coin(props: {}) {
     (async () => {
       const resDetail = await axios(`https://api.coinpaprika.com/v1/coins/${coinId}`);
       const resPrice = await axios(`https://api.coinpaprika.com/v1/tickers/${coinId}`);
+      console.log(130130, coinId);
+
       setInfo(resDetail.data);
       setPrice(resPrice.data);
 
-      console.log(5151, resDetail);
-      console.log(5252, resPrice.data);
-      const {
-        data: {
-          quotes: {
-            USD: { price },
-          },
-        },
-      } = resPrice;
-      console.log(price);
-
-      setLoading(true);
+      setLoading(false);
     })();
-  }, []);
+  }, [coinId]);
+  // 최초 1회 실행하기위해 비워놓지만 hooks 성능을 위해서
+  //dependency 채워줌
 
   return (
     <Container>
       <Header>
-        <Title>{state?.name || "please Login"}</Title>
+        <Title> {state?.name ? state.name : loading ? "Loading..." : info?.name}</Title>
       </Header>
-      {loading ? price?.quotes.USD.price : <Loader>loading...</Loader>}
+      <Overview>
+        <OverviewItems>
+          <span>Rank</span>
+          <span>{info?.rank}</span>
+        </OverviewItems>
+        <OverviewItems>
+          <span>Symbol</span>
+          <span>${info?.symbol}</span>
+        </OverviewItems>
+        <OverviewItems>
+          <span>Open Source</span>
+          <span>{info?.open_source ? "Yes" : "No"}</span>
+        </OverviewItems>
+      </Overview>
+      <Description>{info?.description}</Description>
+      <Overview>
+        <OverviewItems>
+          <span>Total Suply:</span>
+          <span>{price?.total_supply}</span>
+        </OverviewItems>
+        <OverviewItems>
+          <span>Max Supply:</span>
+          <span>{price?.max_supply}</span>
+        </OverviewItems>
+      </Overview>
+      <Tabs>
+        <Tab>
+          <Link to="price">Price</Link>
+        </Tab>
+        <Tab>
+          <Link to="chart">Chart</Link>
+        </Tab>
+      </Tabs>
+      <Routes>
+        <Route path="price" element={<Price />} />
+        <Route path="chart" element={<Chart />} />
+      </Routes>
+      {/* {loading ? price?.quotes.USD.price : <Loader>loading...</Loader>} */}
     </Container>
   );
 }
