@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getCoinData } from "../api";
+import { Helmet } from "react-helmet";
 
 interface CoinData {
   id: string;
@@ -72,6 +73,9 @@ function Coins() {
 
   return (
     <Container>
+      <Helmet>
+        <title>CoinInfo</title>
+      </Helmet>
       <Header>
         <Title>Coins</Title>
       </Header>

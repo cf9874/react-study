@@ -2,6 +2,7 @@ import axios from "axios";
 import { Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import Price from "../Component/Price";
 import Chart from "../Component/Chart";
 import { Link } from "react-router-dom";
@@ -148,14 +149,22 @@ function Coin() {
   const { isLoading: detailLoading, data: detailData } = useQuery<IInfoData>(["detail", coinId], () =>
     getCoinDetail(`${coinId}`)
   );
-  const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(["price", coinId], () =>
-    getCoinPrice(`${coinId}`)
+  const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
+    ["price", coinId],
+    () => getCoinPrice(`${coinId}`),
+    {
+      refetchInterval: 60 * 1000,
+      //주기적으로 업데이트
+    }
   );
 
   const loading = detailLoading || priceLoading;
 
   return (
     <Container>
+      <Helmet>
+        <title> {state?.name ? state.name : loading ? "Loading..." : `CoinInfo | ${detailData?.name}`}</title>
+      </Helmet>
       <Header>
         <Title> {state?.name ? state.name : loading ? "Loading..." : detailData?.name}</Title>
       </Header>
@@ -196,7 +205,7 @@ function Coin() {
         <Route path="chart" element={<Chart coinId={`${coinId}`} />} />
         <Route path="price" element={<Price />} />
       </Routes>
-      {/* {loading ? price?.quotes.USD.price : <Loader>loading...</Loader>} */}
+      
     </Container>
   );
 }

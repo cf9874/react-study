@@ -15,29 +15,38 @@ interface IHistory {
 interface ChartProps {
   coinId: string;
 }
+interface seriesProps {
+  x: number;
+  y: number[];
+}
 
 function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistory[]>(["history", coinId], () => getCoinHistory(coinId));
   console.log(1111, data);
-  console.log(
-    2222,
-    data?.map((price) => Number(price.close))
-  );
-  const series = {
-    name: "price",
-    data: data?.map((price) => Number(price.close)),
+
+  const candleSeries = (price: IHistory[]) => {
+    const data = price.map((e) => {
+      return { x: e.time_open, y: [e.open, e.high, e.low, e.close] };
+    });
+    return data;
   };
+
   return (
     <div>
       {isLoading ? (
         "Loading..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
               name: "Price",
-              data: data?.map((price) => Number(price.close)) as number[],
+              data: data?.map((price) => {
+                return {
+                  x: price.time_open,
+                  y: [Number(price.open), Number(price.high), Number(price.low), Number(price.close)],
+                };
+              }) as seriesProps[],
             },
           ]}
           options={{
@@ -54,7 +63,7 @@ function Chart({ coinId }: ChartProps) {
             grid: { show: true },
             stroke: {
               curve: "smooth",
-              width: 4,
+              width: 1,
             },
             yaxis: {
               show: true,
@@ -71,11 +80,6 @@ function Chart({ coinId }: ChartProps) {
               y: {
                 formatter: (val, opts?) => `$${val.toFixed(3)}`,
               },
-            },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-              colors: ["red"],
             },
           }}
         />
