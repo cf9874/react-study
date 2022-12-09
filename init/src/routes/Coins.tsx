@@ -69,7 +69,6 @@ const Loader = styled.div`
 function Coins() {
   const { isLoading, data } = useQuery<CoinData[]>(["getAllCoins"], getCoinData);
   // data loading이 다 되면 data 에 값을 넣을 것이다.
-  console.log(7272, data);
 
   return (
     <Container>
