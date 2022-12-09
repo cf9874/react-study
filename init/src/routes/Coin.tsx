@@ -193,8 +193,8 @@ function Coin() {
         </Tab>
       </Tabs>
       <Routes>
+        <Route path="chart" element={<Chart coinId={`${coinId}`} />} />
         <Route path="price" element={<Price />} />
-        <Route path="chart" element={<Chart />} />
       </Routes>
       {/* {loading ? price?.quotes.USD.price : <Loader>loading...</Loader>} */}
     </Container>
