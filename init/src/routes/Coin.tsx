@@ -136,6 +136,21 @@ const Tab = styled.div<{ isActive: boolean }>`
     padding: 30px 80px;
   }
 `;
+const BackToMain = styled.div`
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  width: 35px;
+  height: 35px;
+
+  a {
+    line-height: 50px;
+    text-align: center;
+    img {
+      width: 100%;
+    }
+  }
+`;
 
 function Coin() {
   //   const { coinId } = useParams<{ coinId: string }>();
@@ -144,6 +159,7 @@ function Coin() {
   const state = location.state as RouterState;
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
+
   console.log(154, coinId);
 
   const { isLoading: detailLoading, data: detailData } = useQuery<IInfoData>(["detail", coinId], () =>
@@ -165,6 +181,11 @@ function Coin() {
       <Helmet>
         <title> {state?.name ? state.name : loading ? "Loading..." : `CoinInfo | ${detailData?.name}`}</title>
       </Helmet>
+      <BackToMain>
+        <Link to="/">
+          <img src="back-button.png" alt="back" />
+        </Link>
+      </BackToMain>
       <Header>
         <Title> {state?.name ? state.name : loading ? "Loading..." : detailData?.name}</Title>
       </Header>
@@ -203,9 +224,8 @@ function Coin() {
       </Tabs>
       <Routes>
         <Route path="chart" element={<Chart coinId={`${coinId}`} />} />
-        <Route path="price" element={<Price />} />
+        <Route path="price" element={<Price coinId={`${coinId}`} />} />
       </Routes>
-      
     </Container>
   );
 }
