@@ -124,6 +124,7 @@ const Tabs = styled.div`
   align-items: center;
 `;
 const Tab = styled.div<{ isActive: boolean }>`
+  width: 200px;
   text-align: center;
   line-height: 50px;
   background-color: ${(props) => (props.isActive ? " rgba(35, 100, 100, 0.5)" : "rgba(0, 0, 0, 0.5)")};
