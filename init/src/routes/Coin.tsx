@@ -169,8 +169,8 @@ function Coin() {
           <span>${detailData?.symbol}</span>
         </OverviewItems>
         <OverviewItems>
-          <span>Open Source</span>
-          <span>{detailData?.open_source ? "Yes" : "No"}</span>
+          <span>Price</span>
+          <span>{priceData?.quotes.USD.price.toFixed(3)}</span>
         </OverviewItems>
       </Overview>
       <Description>{detailData?.description}</Description>
