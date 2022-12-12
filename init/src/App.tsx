@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import React from "react";
+import { createGlobalStyle } from "styled-components";
 import Router from "./Routers";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const GlobalStyle = createGlobalStyle`

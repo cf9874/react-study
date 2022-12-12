@@ -1,8 +1,7 @@
 import axios from "axios";
 import { Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Helmet } from "react-helmet";
+
 import Price from "../Component/Price";
 import Chart from "../Component/Chart";
 import { Link } from "react-router-dom";
@@ -161,8 +160,6 @@ function Coin() {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
-  console.log(154, coinId);
-
   const { isLoading: detailLoading, data: detailData } = useQuery<IInfoData>(["detail", coinId], () =>
     getCoinDetail(`${coinId}`)
   );
@@ -179,9 +176,9 @@ function Coin() {
 
   return (
     <Container>
-      <Helmet>
+      {/* <Helmet>
         <title> {state?.name ? state.name : loading ? "Loading..." : `CoinInfo | ${detailData?.name}`}</title>
-      </Helmet>
+      </Helmet> */}
       <BackToMain>
         <Link to="/">
           <img src="back-button.png" alt="back" />

@@ -22,15 +22,6 @@ interface seriesProps {
 
 function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistory[]>(["history", coinId], () => getCoinHistory(coinId));
-  console.log(1111, data);
-
-  const candleSeries = (price: IHistory[]) => {
-    const data = price.map((e) => {
-      return { x: e.time_open, y: [e.open, e.high, e.low, e.close] };
-    });
-    return data;
-  };
-
   return (
     <div>
       {isLoading ? (

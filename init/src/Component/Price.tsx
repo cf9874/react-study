@@ -51,8 +51,6 @@ function Price({ coinId }: PriceProps) {
   const {
     quotes: { USD },
   } = data;
-  console.log(4848, data);
-  console.log(4949, USD);
 
   return (
     <Container>

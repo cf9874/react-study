@@ -1,10 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getCoinData } from "../api";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 
 interface CoinData {
   id: string;
@@ -73,9 +71,6 @@ function Coins() {
 
   return (
     <Container>
-      <Helmet>
-        <title>CoinInfo</title>
-      </Helmet>
       <Header>
         <Title>Coins</Title>
       </Header>
@@ -83,14 +78,15 @@ function Coins() {
         {isLoading ? (
           <Loader>loading...</Loader>
         ) : (
-          data?.slice(0, 100).map((coin) => (
-            <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+          data?.slice(0, 10).map((coin) => (
+            <Link key={coin.id} to={`/${coin.id}`} state={{ name: coin.name }}>
               <Coin key={coin.id}>
                 <img
                   src={`https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/16/${coin.name
                     .toLowerCase()
                     .split(" ")
                     .join("-")}.png`}
+                  alt={coin.id}
                 />
                 {coin.name} &rarr;
               </Coin>
