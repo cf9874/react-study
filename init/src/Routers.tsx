@@ -1,14 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Coin, Coins } from "./routes";
 
-function Router() {
+interface IRouterProps {
+  isDark: boolean;
+  toggle: () => void;
+}
+
+function Router({ isDark, toggle }: IRouterProps) {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {/*  PUBLIC_URL은 package.json의 homepage URL값 */}{" "}
+      {/*  PUBLIC_URL은 package.json의 homepage URL값 */}
       <Routes>
-        {/* <Route path="/:coinId" element={<Coin />} /> */}
-        <Route path="/:coinId/*" element={<Coin />} />
-        <Route path="/" element={<Coins />} />
+        <Route path="/:coinId/*" element={<Coin isDark={isDark} toggle={toggle} />} />
+        <Route path="/" element={<Coins isDark={isDark} toggle={toggle} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,13 +14,14 @@ interface IHistory {
 }
 interface ChartProps {
   coinId: string;
+  isDark: boolean;
 }
 interface seriesProps {
   x: number;
   y: number[];
 }
 
-function Chart({ coinId }: ChartProps) {
+function Chart({ coinId, isDark }: ChartProps) {
   const { isLoading, data } = useQuery<IHistory[]>(["history", coinId], () => getCoinHistory(coinId));
   return (
     <div>
@@ -42,7 +43,7 @@ function Chart({ coinId }: ChartProps) {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "light" : "dark",
             },
             chart: {
               height: 500,

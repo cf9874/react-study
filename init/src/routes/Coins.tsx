@@ -14,6 +14,11 @@ interface CoinData {
   type: string;
 }
 
+interface ICoinsProps {
+  isDark: boolean;
+  toggle: () => void;
+}
+
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
@@ -41,8 +46,8 @@ const CoinList = styled.ul`
   }
 `;
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.boxColor};
+  color: ${(props) => props.theme.textColor};
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 15px;
@@ -65,12 +70,13 @@ const Loader = styled.div`
   font-size: 20px;
 `;
 
-function Coins() {
+function Coins({ isDark, toggle }: ICoinsProps) {
   const { isLoading, data } = useQuery<CoinData[]>(["getAllCoins"], getCoinData);
   // data loading이 다 되면 data 에 값을 넣을 것이다.
 
   return (
     <Container>
+      <button onClick={toggle}>asdsa</button>
       <Header>
         <Title>Coins</Title>
       </Header>
@@ -78,7 +84,7 @@ function Coins() {
         {isLoading ? (
           <Loader>loading...</Loader>
         ) : (
-          data?.slice(0, 10).map((coin) => (
+          data?.slice(0, 100).map((coin) => (
             <Link key={coin.id} to={`/${coin.id}`} state={{ name: coin.name }}>
               <Coin key={coin.id}>
                 <img
