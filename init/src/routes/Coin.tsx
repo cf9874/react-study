@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,9 +7,6 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getCoinDetail, getCoinPrice } from "../api";
 
-interface CoinParams {
-  coinId: string;
-}
 interface RouterState {
   name: string;
 }
@@ -89,11 +85,6 @@ const Header = styled.header`
 
 const Title = styled.div`
   color: ${(props) => props.theme.accentColor};
-`;
-
-const Loader = styled.div`
-  text-align: center;
-  font-size: 20px;
 `;
 
 const Overview = styled.div`
