@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { getCoinData } from "../api";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 // import { Helmet } from "react-helmet";
 
 interface CoinData {
@@ -12,11 +14,6 @@ interface CoinData {
   is_new: boolean;
   is_active: boolean;
   type: string;
-}
-
-interface ICoinsProps {
-  isDark: boolean;
-  toggle: () => void;
 }
 
 const Container = styled.div`
@@ -70,13 +67,14 @@ const Loader = styled.div`
   font-size: 20px;
 `;
 
-function Coins({ isDark, toggle }: ICoinsProps) {
+function Coins() {
   const { isLoading, data } = useQuery<CoinData[]>(["getAllCoins"], getCoinData);
   // data loading이 다 되면 data 에 값을 넣을 것이다.
 
+  const setIsDark = useSetRecoilState(isDarkAtom);
   return (
     <Container>
-      <button onClick={toggle}>asdsa</button>
+      <button onClick={() => setIsDark((prev) => !prev)}>asdsa</button>
       <Header>
         <Title>Coins</Title>
       </Header>

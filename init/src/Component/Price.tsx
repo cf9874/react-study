@@ -5,7 +5,6 @@ import { getCoinPrice } from "../api";
 
 interface PriceProps {
   coinId: string;
-  isDark: boolean;
 }
 
 const Container = styled.div`
@@ -47,7 +46,7 @@ const Tab = styled.div`
   margin: 15px 0;
   width: 200px;
 `;
-function Price({ coinId, isDark }: PriceProps) {
+function Price({ coinId }: PriceProps) {
   const { isLoading, data } = useQuery(["price", coinId], () => getCoinPrice(coinId));
   const {
     quotes: { USD },

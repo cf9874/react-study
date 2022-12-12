@@ -70,10 +70,6 @@ interface IPriceData {
   };
 }
 
-interface ICoinProps {
-  isDark: boolean;
-  toggle: () => void;
-}
 const Container = styled.div`
   padding: 0px 20px;
   max-width: 480px;
@@ -157,7 +153,7 @@ const BackToMain = styled.div`
   }
 `;
 
-function Coin({ isDark, toggle }: ICoinProps) {
+function Coin() {
   //   const { coinId } = useParams<{ coinId: string }>();
   const { coinId } = useParams();
   const location = useLocation();
@@ -226,8 +222,8 @@ function Coin({ isDark, toggle }: ICoinProps) {
         </Tab>
       </Tabs>
       <Routes>
-        <Route path="chart" element={<Chart coinId={`${coinId}`} isDark={isDark} />} />
-        <Route path="price" element={<Price coinId={`${coinId}`} isDark={isDark} />} />
+        <Route path="chart" element={<Chart coinId={`${coinId}`} />} />
+        <Route path="price" element={<Price coinId={`${coinId}`} />} />
       </Routes>
     </Container>
   );
