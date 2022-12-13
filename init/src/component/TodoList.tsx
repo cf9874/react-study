@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { atom } from "recoil";
 
 interface IFormData {
   errors: {
@@ -12,14 +13,20 @@ interface IFormData {
   email: string;
   password: string;
   password1: string;
+  extraError?: string;
 }
+
+const toDoState = atom({
+  key: "toDo",
+  default: [],
+});
 
 function TodoList() {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
+    setError,
   } = useForm<IFormData>({
     defaultValues: {
       email: "@naver.com",
@@ -27,6 +34,17 @@ function TodoList() {
   });
 
   const onValid = (data: IFormData) => {
+    const { password, password1 } = data;
+    if (password !== password1) {
+      return setError("password1", { message: "Please check password again." });
+    }
+    setError(
+      "extraError",
+      { message: "Sorry. Server is down.." },
+      {
+        shouldFocus: true,
+      }
+    );
     console.log(data);
   };
   console.log("error", errors);
@@ -57,6 +75,10 @@ function TodoList() {
         <input
           {...register("email", {
             required: "email is required",
+            validate: {
+              noASD: (value) => (value.includes("ASD") ? "Sorry. ASD is not allowed" : true),
+              noZXC: (value) => (value.includes("ZXC") ? "Sorry. ZXC is not allowed" : true),
+            },
             pattern: {
               value: /^[A-Za-z0-9._%+-]+@naver.com$/,
               message: "only naver.com is allowed",
@@ -79,6 +101,7 @@ function TodoList() {
         <span>{errors?.password1?.message}</span>
         <br />
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );
