@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface IFormData {
@@ -12,17 +11,22 @@ interface IFormData {
   userName: string;
   email: string;
   password: string;
+  password1: string;
 }
 
 function TodoList() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<IFormData>();
 
-  const onValid = (data: any) => {
-    const { firstName, lastName, userName, email, password } = data;
+    formState: { errors },
+  } = useForm<IFormData>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
+
+  const onValid = (data: IFormData) => {
     console.log(data);
   };
   console.log("error", errors);
@@ -45,8 +49,11 @@ function TodoList() {
           })}
           placeholder="Write your firstName"
         />
+        <span>{errors?.firstName?.message}</span>
         <input {...register("lastName", { required: "lastName is required" })} placeholder="Write your lastName" />
+        <span>{errors?.lastName?.message}</span>
         <input {...register("userName", { required: "userName is required" })} placeholder="Write your userName" />
+        <span>{errors?.userName?.message}</span>
         <input
           {...register("email", {
             required: "email is required",
@@ -58,7 +65,19 @@ function TodoList() {
           placeholder="Write your email"
         />{" "}
         <span>{errors?.email?.message}</span>
-        <input {...register("password", { required: "password is required" })} placeholder="Write your password" />
+        <input
+          type="password"
+          {...register("password", { required: "password is required" })}
+          placeholder="Write your password"
+        />
+        <span>{errors?.password?.message}</span>
+        <input
+          type="password"
+          {...register("password1", { required: "password1 is required" })}
+          placeholder="Write your password1"
+        />
+        <span>{errors?.password1?.message}</span>
+        <br />
         <button>Add</button>
       </form>
     </div>
