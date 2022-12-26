@@ -1,14 +1,15 @@
 import { atom, selector } from "recoil";
+import { DESC } from "./enum";
 
 export interface IToDo {
   id: number;
   text: string;
-  desc: "TODO" | "DOING" | "DONE";
+  desc: DESC;
 }
 
-export const descState = atom({
+export const descState = atom<DESC>({
   key: "desc",
-  default: "TODO",
+  default: DESC.TODO,
 });
 
 export const toDoState = atom<IToDo[]>({

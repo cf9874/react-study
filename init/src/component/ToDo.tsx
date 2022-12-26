@@ -1,6 +1,7 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import { IToDo, toDoState } from "../atoms";
+import { DESC } from "../enum";
 
 function ToDo({ id, text, desc }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
@@ -11,7 +12,7 @@ function ToDo({ id, text, desc }: IToDo) {
     } = event;
     setToDos((prev) => {
       const index = prev.findIndex((e) => e.id === id);
-      const newTodo = { id, text, desc: name as "TODO" | "DONE" | "DOING" };
+      const newTodo = { id, text, desc: name as DESC };
 
       return [...prev.slice(0, index), newTodo, ...prev.slice(index + 1)];
     });

@@ -1,6 +1,7 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { descState, toDoSelector } from "../atoms";
+import { DESC } from "../enum";
 import CreateToDo from "./CreateTodo";
 import ToDo from "./ToDo";
 
@@ -12,7 +13,7 @@ function TodoList() {
       currentTarget: { value },
     } = event;
 
-    setDesc(value);
+    setDesc(value as DESC);
   };
   console.log(desc);
   return (
@@ -21,9 +22,9 @@ function TodoList() {
       <hr />
       <form>
         <select value={desc} onInput={onInput}>
-          <option value="TODO">TODO</option>
-          <option value="DOING">DOING</option>
-          <option value="DONE">DONE</option>
+          <option value={DESC.TODO}>TODO</option>
+          <option value={DESC.DOING}>DOING</option>
+          <option value={DESC.DONE}>DONE</option>
         </select>
       </form>
       <CreateToDo />
